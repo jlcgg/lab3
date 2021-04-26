@@ -1,0 +1,18 @@
+@startuml
+!define LIGHTBLUE
+!includeurl https://gist.githubusercontent.com/amgs/de57560012a8a5f0e4240f392b678a40/raw/c903c6b4f16b60b5eef3248f093497faae378f51/style.puml
+allowmixing
+class BankAccount {
+    + double getBalance()
+    + void deposit(double amount)
+    + double withdraw(double amount)
+
+}
+
+class DepositThread <<Runnable>>
+class WithdrawThread <<Runnable>>
+
+DepositThread "1..*" --> "1" BankAccount
+BankAccount "1" --> "1..*" WithdrawThread
+
+@end

@@ -1,0 +1,24 @@
+@startuml
+!define LIGHTBLUE
+!includeurl https://gist.githubusercontent.com/amgs/de57560012a8a5f0e4240f392b678a40/raw/c903c6b4f16b60b5eef3248f093497faae378f51/style.puml
+allowmixing
+actor User
+collections LowercaseWordCollection
+node WordRegisterPool {
+    class WordRegister <<Runnable>> {}
+}
+node WordCapitalizerPool {
+    class WordCapitalizer <<Runnable>> {}
+}
+node WordOutputPool {
+    class WordOutput <<Runnable>> {}
+}
+queue LowercaseQueue
+queue UppercaseQueue
+User -> LowercaseWordCollection
+LowercaseWordCollection -> WordRegister
+WordRegister "1..*" --> "1" LowercaseQueue
+LowercaseQueue "1" -> "1..*" WordCapitalizer
+WordCapitalizer "1..*" --> "1" UppercaseQueue
+UppercaseQueue "1" -> "1..*" WordOutput
+@end
